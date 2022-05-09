@@ -45,8 +45,8 @@ public abstract class Notificator {
 	}
 	
 	/**
-	 * 観察対象の変更の差分を取得する
-	 * @return 変更の差分
+	 * 観察対象の差分を取得する
+	 * @return 差分
 	 */
 	public abstract String getDiff();
 	
