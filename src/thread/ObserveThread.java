@@ -20,15 +20,21 @@ public class ObserveThread extends Thread {
 	 * 監視を行うConcreteSubject
 	 */
 	Notificator g_notificator;
+	
+	/**
+	 * 差分比較を何ミリ秒ごとに行うか
+	 */
+	int g_milliseconds;
 
 	/**
 	 * コンストラクタ
 	 * @param x_file 監視対象のファイル
 	 * @param x_notificator 監視を行うConcreteSubject
 	 */
-	public ObserveThread(File x_file, Notificator x_notificator) {
+	public ObserveThread(File x_file, Notificator x_notificator, int x_milliseconds) {
 		this.g_file = x_file;
 		this.g_notificator = x_notificator;
+		this.g_milliseconds = x_milliseconds;
 	}
 	
 	/**
@@ -42,7 +48,7 @@ public class ObserveThread extends Thread {
 			System.out.println("Running...");
 			while(true) {
 				this.g_notificator.execute();
-				Thread.sleep(1000);
+				Thread.sleep(this.g_milliseconds);
 			}
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);

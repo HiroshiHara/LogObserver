@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * 監視対象のファイルに差分が生じたら観察者に通知するクラス
  * @author mrbob
@@ -57,9 +59,16 @@ public class DiffNotificator extends Notificator {
 		this.g_targetFile = x_targetFile;
 	}
 	
+	/**
+	 * 差分比較処理を実行する<br>
+	 * 比較元と新規ログの差分がある場合、<br>
+	 * その差分のみを保存する。
+	 * @param x_newText
+	 * @param x_oldText
+	 */
 	public void execDiff(String x_newText, String x_oldText) {
 		// 初回実行時、差分比較先テキストにセットして終了
-		if (getOldText().isBlank()) {
+		if (StringUtils.isBlank(getOldText())) {
 			setOldText(x_newText);
 			return;
 		}
@@ -86,12 +95,16 @@ public class DiffNotificator extends Notificator {
 		
 	}
 	
+	/**
+	 * ファイルの内容を読み取り、差分比較処理を呼び出す。<br>
+	 * 差分比較後、監視者に通知を行う。
+	 */
 	@Override
 	public void execute() {
 		Path p_file = Paths.get(getTargetFile().getAbsolutePath());
 		try {
 			String p_text = Files.readString(p_file);
-			if (!p_text.isEmpty()) {
+			if (!StringUtils.isBlank(p_text)) {
 				setNewText(p_text);
 				execDiff(getNewText(), getOldText());
 				notifyObservers();

@@ -1,5 +1,7 @@
 package observer;
 
+import org.apache.commons.lang3.StringUtils;
+
 import notificator.Notificator;
 
 /**
@@ -15,7 +17,7 @@ public class LogObserver implements Observer {
 	@Override
 	public void update(Notificator x_nottificator) {
 		String p_diff = x_nottificator.getDiff();
-		if (!p_diff.isBlank()) {
+		if (!StringUtils.isBlank(p_diff)) {
 			System.out.println("-------- new lines --------");
 			System.out.println(p_diff);
 		}
