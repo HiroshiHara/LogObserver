@@ -12,3 +12,4 @@ java -jar LogObserver.jar 対象ファイル 出力間隔
 ## Version
 2022/05/14 1.0.0 初回リリース  
 2022/05/14 1.0.1 Readmeを追加  
+2022/05/14 1.0.2 Readmeを修正
