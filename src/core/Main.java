@@ -25,9 +25,9 @@ public class Main {
 	/**
 	 * 観察者に通知するクラス
 	 */
-	public static Notificator g_diffNotificator;
+	public static Notificator _diffNotificator;
 	
-	public static int g_milliseconds;
+	public static int _milliseconds;
 	
 	public static void main(String[] args) {
 		if (args.length < 1 || args.length > 2) {
@@ -42,32 +42,32 @@ public class Main {
 		// 第二引数がある時
 		if (args.length == 2) {
 			if (!StringUtils.isBlank(args[1]) && NumberUtils.isCreatable(args[1])) {
-				int p_milliseconds = NumberUtils.toInt(args[1], 1);
-				g_milliseconds = p_milliseconds * 1000;
+				int milliseconds = NumberUtils.toInt(args[1], 1);
+				_milliseconds = milliseconds * 1000;
 			}
 		}
 		
-		String p_currentDir = System.getProperty("user.dir");
-		File p_target1 = new File(args[0]);
-		File p_target2 = new File(p_currentDir + "\\" + args[0]);
+		String currentDir = System.getProperty("user.dir");
+		File target1 = new File(args[0]);
+		File target2 = new File(currentDir + "\\" + args[0]);
 		
-		Thread p_thread = null;
-		Observer g_LogObserver = new LogObserver();
+		Thread thread = null;
+		Observer _LogObserver = new LogObserver();
 		
 		// 指定ファイルが絶対パスに存在する場合
-		if (p_target1.exists()) {
-			g_diffNotificator = new DiffNotificator(p_target1);
-			g_diffNotificator.addObserver(g_LogObserver);
-			p_thread = new ObserveThread(p_target1, g_diffNotificator, g_milliseconds);
+		if (target1.exists()) {
+			_diffNotificator = new DiffNotificator(target1);
+			_diffNotificator.addObserver(_LogObserver);
+			thread = new ObserveThread(target1, _diffNotificator, _milliseconds);
 		// 指定ファイルがカレントディレクトリに存在する場合
-		} else if(p_target2.exists()) {
-			g_diffNotificator = new DiffNotificator(p_target2);
-			g_diffNotificator.addObserver(g_LogObserver);
-			p_thread = new ObserveThread(p_target2, g_diffNotificator, g_milliseconds);
+		} else if(target2.exists()) {
+			_diffNotificator = new DiffNotificator(target2);
+			_diffNotificator.addObserver(_LogObserver);
+			thread = new ObserveThread(target2, _diffNotificator, _milliseconds);
 		} else {
 			throw new IllegalArgumentException("引数に指定されたファイルが存在しません。");
 		}
 		
-		p_thread.start();
+		thread.start();
 	}
 }

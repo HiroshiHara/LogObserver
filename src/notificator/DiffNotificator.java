@@ -18,22 +18,22 @@ public class DiffNotificator extends Notificator {
 	/**
 	 * 監視対象のファイル
 	 */
-	private File g_targetFile;
+	private File _targetFile;
 	
 	/**
 	 * 差分比較元テキスト(常にファイル最新の内容)
 	 */
-	private String g_newText = "";
+	private String _newText = "";
 	
 	/**
 	 * 差分比較先テキスト(前回のファイルの内容)
 	 */
-	private String g_oldText = "";
+	private String _oldText = "";
 	
 	/**
 	 * 差分テキスト
 	 */
-	private String g_diff = "";
+	private String _diff = "";
 	
 	/**
 	 * 改行コード(CRLF)
@@ -53,23 +53,23 @@ public class DiffNotificator extends Notificator {
 	
 	/**
 	 * コンストラクタ
-	 * @param x_targetFile 監視対象のファイル
+	 * @param $targetFile 監視対象のファイル
 	 */
-	public DiffNotificator(File x_targetFile) {
-		this.g_targetFile = x_targetFile;
+	public DiffNotificator(File $targetFile) {
+		this._targetFile = $targetFile;
 	}
 	
 	/**
 	 * 差分比較処理を実行する<br>
 	 * 比較元と新規ログの差分がある場合、<br>
 	 * その差分のみを保存する。
-	 * @param x_newText
-	 * @param x_oldText
+	 * @param $newText
+	 * @param $oldText
 	 */
-	public void execDiff(String x_newText, String x_oldText) {
+	public void execDiff(String $newText, String $oldText) {
 		// 初回実行時、差分比較先テキストにセットして終了
 		if (StringUtils.isBlank(getOldText())) {
-			setOldText(x_newText);
+			setOldText($newText);
 			return;
 		}
 		// 差分がない場合、差分テキストに空文字をセットして終了
@@ -79,16 +79,16 @@ public class DiffNotificator extends Notificator {
 		// 差分比較処理(ログが対象なので新規行のみ求める)
 		} else {
 			// 比較元文字列の終了位置から最新文字列の終端までを切り出し
-			String p_diff = getNewText().substring(getOldText().length(), getNewText().length());
+			String diff = getNewText().substring(getOldText().length(), getNewText().length());
 			// 差分の開始が改行コード付きの場合取り除く
-			if (p_diff.startsWith(CRLF)) {
-				p_diff = p_diff.substring(CRLF.length());
-			} else if (p_diff.startsWith(LF)) {
-				p_diff = p_diff.substring(LF.length());
-			} else if (p_diff.startsWith(CR)) {
-				p_diff = p_diff.substring(CR.length());
+			if (diff.startsWith(CRLF)) {
+				diff = diff.substring(CRLF.length());
+			} else if (diff.startsWith(LF)) {
+				diff = diff.substring(LF.length());
+			} else if (diff.startsWith(CR)) {
+				diff = diff.substring(CR.length());
 			}
-			setDiff(p_diff);
+			setDiff(diff);
 			// 差分比較終了後、差分比較元を比較先に移動
 			setOldText(getNewText());
 		}
@@ -101,11 +101,11 @@ public class DiffNotificator extends Notificator {
 	 */
 	@Override
 	public void execute() {
-		Path p_file = Paths.get(getTargetFile().getAbsolutePath());
+		Path file = Paths.get(getTargetFile().getAbsolutePath());
 		try {
-			String p_text = Files.readString(p_file);
-			if (!StringUtils.isBlank(p_text)) {
-				setNewText(p_text);
+			String text = Files.readString(file);
+			if (!StringUtils.isBlank(text)) {
+				setNewText(text);
 				execDiff(getNewText(), getOldText());
 				notifyObservers();
 			}
@@ -119,7 +119,7 @@ public class DiffNotificator extends Notificator {
 	 * @return 監視対象のファイル
 	 */
 	public File getTargetFile() {
-		return this.g_targetFile;
+		return this._targetFile;
 	}
 	
 	/**
@@ -128,15 +128,15 @@ public class DiffNotificator extends Notificator {
 	 */
 	@Override
 	public String getDiff() {
-		return this.g_diff;
+		return this._diff;
 	}
 	
 	/**
 	 * 差分テキストをセットする
-	 * @param x_diff 差分テキスト
+	 * @param $diff 差分テキスト
 	 */
-	public void setDiff(String x_diff) {
-		this.g_diff = x_diff;
+	public void setDiff(String $diff) {
+		this._diff = $diff;
 	}
 	
 	/**
@@ -144,15 +144,15 @@ public class DiffNotificator extends Notificator {
 	 * @return 差分比較元テキスト(常にファイル最新の内容)
 	 */
 	public String getNewText() {
-		return this.g_newText;
+		return this._newText;
 	}
 	
 	/**
 	 * 差分比較先テキスト(前回のファイルの内容)をセットする
-	 * @param x_newText 差分比較先テキスト(前回のファイルの内容)
+	 * @param $newText 差分比較先テキスト(前回のファイルの内容)
 	 */
-	public void setNewText(String x_newText) {
-		this.g_newText = x_newText;
+	public void setNewText(String $newText) {
+		this._newText = $newText;
 	}
 	
 	/**
@@ -160,15 +160,15 @@ public class DiffNotificator extends Notificator {
 	 * @return 差分比較先テキスト(前回のファイルの内容)
 	 */
 	public String getOldText() {
-		return this.g_oldText;
+		return this._oldText;
 	}
 	
 	/**
 	 * 差分比較元テキスト(常にファイル最新の内容)をセットする
-	 * @param x_newText 差分比較元テキスト(常にファイル最新の内容)
+	 * @param $newText 差分比較元テキスト(常にファイル最新の内容)
 	 */
-	public void setOldText(String x_oldText) {
-		this.g_oldText = x_oldText;
+	public void setOldText(String $oldText) {
+		this._oldText = $oldText;
 	}
 	
 }

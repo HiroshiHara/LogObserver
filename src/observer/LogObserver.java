@@ -15,11 +15,11 @@ public class LogObserver implements Observer {
 	 * 監視対象のログに変更が生じた場合、その差分をコンソールに表示する
 	 */
 	@Override
-	public void update(Notificator x_nottificator) {
-		String p_diff = x_nottificator.getDiff();
-		if (!StringUtils.isBlank(p_diff)) {
+	public void update(Notificator $nottificator) {
+		String diff = $nottificator.getDiff();
+		if (!StringUtils.isBlank(diff)) {
 			System.out.println("-------- new lines --------");
-			System.out.println(p_diff);
+			System.out.println(diff);
 		}
 	}
 }

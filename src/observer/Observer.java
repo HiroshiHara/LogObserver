@@ -10,7 +10,7 @@ import notificator.Notificator;
 public interface Observer {
 	/**
 	 * 観察者に情報の更新を伝達する抽象メソッド
-	 * @param x_notificator 情報の更新を通知するオブジェクト
+	 * @param $notificator 情報の更新を通知するオブジェクト
 	 */
-	public abstract void update(Notificator x_notificator);
+	public abstract void update(Notificator $notificator);
 }

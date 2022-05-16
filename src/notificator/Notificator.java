@@ -15,32 +15,32 @@ public abstract class Notificator {
 	/**
 	 * この抽象クラスの実装の観察者を保持するリスト
 	 */
-	private ArrayList<Observer> g_observers = new ArrayList<>();
+	private ArrayList<Observer> _observers = new ArrayList<>();
 	
 	/**
 	 * 観察者を追加する
-	 * @param x_observer 追加する観察者
+	 * @param $observer 追加する観察者
 	 */
-	public void addObserver(Observer x_observer) {
-		g_observers.add(x_observer);
+	public void addObserver(Observer $observer) {
+		_observers.add($observer);
 	}
 	
 	/**
 	 * 観察者を削除する
-	 * @param x_observer 削除する観察者
+	 * @param $observer 削除する観察者
 	 */
-	public void deleteObserver(Observer x_observer) {
-		g_observers.remove(x_observer);
+	public void deleteObserver(Observer $observer) {
+		_observers.remove($observer);
 	}
 	
 	/**
 	 * この抽象クラスの実装の観察者全体に変更を伝達する
 	 */
 	public void notifyObservers() {
-		Iterator<Observer> p_it = g_observers.iterator();
-		while (p_it.hasNext()) {
-			Observer p_observer = p_it.next();
-			p_observer.update(this);
+		Iterator<Observer> it = _observers.iterator();
+		while (it.hasNext()) {
+			Observer observer = it.next();
+			observer.update(this);
 		}
 	}
 	
